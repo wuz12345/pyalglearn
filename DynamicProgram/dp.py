@@ -1,6 +1,7 @@
 # 这个文件主要关于动态规划问题
 # 问题如下：
 # 1、硬币兑换问题
+import time
 def coin_change(S,n):
     """
     硬币兑换可以看作是找零问题：
@@ -88,10 +89,23 @@ def abbr(a: str, b: str) -> bool:
                 if a[i].islower():
                     dp[i + 1][j] = True
     return dp[n][m]
+def find2():
+    i=0
+    while True:
+        index = pow(2,i)
+        if index%3 ==0:
+            print(index)
+            break
+        else:
+            print(i,index)
+            time.sleep(1)
+            i = i+1
+
 
 if __name__=="__main__":
-    print(coin_change([3,2,5],100))
-    print(coin([3,2,5], 100))
+    # print(coin_change([3,2,5],100))
+    # print(coin([3,2,5], 100))
+    find2()
     # print(abbr("bcdef","CF"))
 
 
