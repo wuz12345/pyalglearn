@@ -29,4 +29,4 @@ def compare_string(string1: str, string2: str) -> str:
 
 
 if __name__ =="__main__":
-    print(compare_string('1110','111'))
+    print(compare_string('1110','1111'))
