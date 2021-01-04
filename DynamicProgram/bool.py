@@ -17,6 +17,9 @@ def compare_string(string1: str, string2: str) -> str:
     for i in range(len(l1)):
         if l1[i] != l2[i]:
             count += 1
+
+
+
             l1[i] = "_"
     if count > 1:
         return -1
