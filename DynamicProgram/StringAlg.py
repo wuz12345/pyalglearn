@@ -246,5 +246,32 @@ def cutSlpit(s):
         anstr = anstr+str(len(i))+str(i[0])
     return anstr
 
+#省份问题
+def findCircleNum(isConnected) -> int:
+    import numpy as np
+    isConnectedMatrix = np.matrix(isConnected)
+    row,col = isConnectedMatrix.shape
+    DegreeMatrix = np.identity(row)
+    for i in range(row):
+        DegreeMatrix[i][i] = np.sum(isConnectedMatrix[i])
+    LaplaceMatrix = DegreeMatrix - isConnectedMatrix
+    x,_ = np.linalg.eigh(LaplaceMatrix)
+    return list(x).count(0)
+#字符串替换问题
+def replaceSpace(s: str) -> str:
+    sl = list(s)
+    for i in range(len(sl)):
+        if sl[i] == " ":
+            sl[i] = "%20"
+    return "".join(sl)
+
+#前n个高频数字
+def topKFrequent(nums) :
+    from collections import defaultdict
+    ans = defaultdict(int)
+    for i in nums:
+        ans[i] = ans[i]+1
+    #用于保存前k个值
+    print(ans)
 if __name__ == "__main__":
-    print(countAndSay(5))
+    print(topKFrequent([1,1,1,2,2,3]))
