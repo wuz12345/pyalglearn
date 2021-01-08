@@ -273,5 +273,87 @@ def topKFrequent(nums) :
         ans[i] = ans[i]+1
     #用于保存前k个值
     print(ans)
+#旋转数组
+def rotate(nums,k) :
+    length = len(nums)
+    ans = [0 for i in range(len(nums))]
+    for i in range(len(nums)):
+        ans[i] = nums[(i+k)%length]
+    return ans
+#中位数
+def findMedianSortedArrays(nums1, nums2) :
+    len1 = len(nums1)
+    len2 = len(nums2)
+    total = [0 for i in range(len1 + len2)]
+    index = 0
+    index1 = 0
+    index2 = 0
+    while index1 < len1 and index2 < len2:
+        if nums1[index1] < nums2[index2]:
+            total[index] = nums1[index1]
+            index1 += 1
+        else:
+            total[index] = nums2[index2]
+            index2 += 1
+        index += 1
+    total[index:] = nums1[index1:] if index < len1 else nums2[index2:]
+    print(total)
+    a = (len1 + len2) % 2
+    if a == 0:
+        b = (total[(len1 + len2) // 2] + total[(len1 + len2) // 2 - 1])
+        print(b/ 2)
+    else:
+        print(total[(len1 + len2) // 2])
+#最大子序数和
+def maxSubArray( nums) -> int:
+    f = [0 for i in range(len(nums))]
+    currentmax = f[0]
+    f[0] = nums[0]
+    for i in range(1,len(nums)):
+        f[i] = max(f[i-1]+nums[i],nums[i])
+        if currentmax < f[i]:
+            currentmax = f[i]
+    print(currentmax)
+#华东窗口最大值
+def maxSlidingWindow( nums, k):
+    import heapq
+    n = len(nums)
+    # 注意 Python 默认的优先队列是小根堆
+    q = [(-nums[i], i) for i in range(k)]
+    heapq.heapify(q)
+
+    ans = [-q[0][0]]
+    for i in range(k, n):
+        heapq.heappush(q, (-nums[i], i))
+        while q[0][1] <= i - k:
+            heapq.heappop(q)
+        ans.append(-q[0][0])
+
+    print(ans)
+
+#全排列
+def permute(nums):
+    import itertools
+    ans = []
+    for num in itertools.permutations(nums):
+        print(list(num))
+#最大股票收益
+def maxProfit(prices):
+    nums = len(prices)
+    x = []
+    if nums == 1:
+        return  0
+    for i in range(1,len(prices)):
+
+        if prices[i]>prices[i-1]:
+            x.append(1)
+        if prices[i]<prices[i-1]:
+            x.append(-1)
+        if prices[i] == prices[i-1]:
+            x.append(0)
+    if sum(x) == nums-1:
+        return prices[-1] - prices[0]
+    if sum(x) == 1-nums:
+        return 0
 if __name__ == "__main__":
-    print(topKFrequent([1,1,1,2,2,3]))
+    print(maxProfit( [7,6,4,3,1] ))
