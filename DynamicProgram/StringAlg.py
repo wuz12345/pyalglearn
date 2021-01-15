@@ -355,5 +355,223 @@ def maxProfit(prices):
         return prices[-1] - prices[0]
     if sum(x) == 1-nums:
         return 0
+
+def generateParenthesis(n: int):
+    if n == 1:
+        return ["()"]
+    ans = []
+    last = generateParenthesis(n - 1)
+    for i in last:
+        ans.append(i + "()")
+        if ((i+"()") != ("()"+i)):
+            ans.append("()"+i)
+        ans.append("(" + i + ")")
+    return ans
+def isEqual(a,b):
+    if len(a) != len(b):
+        return False
+    for i in a:
+        if i not in b:
+            print("a:"+i)
+           # return False
+    for i in b:
+        if i not in a:
+            print("b:"+i)
+            # return False
+    l = []
+    for i in a:
+        l.append(a.count(i))
+    print(l)
+    xx = []
+    for i in b:
+        xx.append(b.count(i))
+    print(xx)
+    return True
+#查找
+def search( nums, target: int) :
+    l, r = 0, len(nums) - 1
+    if not nums:
+        return -1
+    while l <= r:
+        mid = (l + r) // 2
+        if nums[mid] == target:
+            return mid
+        if  target > nums[mid]:
+            if target > nums[mid]and target <= nums[r]:
+                l = mid + 1
+            else:
+                r = mid - 1
+        else:
+            if target < nums[mid] and target >= nums[l]:
+                r = mid - 1
+            else:
+                l = mid + 1
+    return -1
+#找最小
+def majorityElement( nums) -> int:
+    from collections import defaultdict
+    a = defaultdict(int)
+
+    for i in nums:
+        a[i] = a[i] + 1
+    v = len(nums)
+    nums.count(a)
+    k = -1
+    for i in a.keys():
+        if a[i] <= v:
+            k = i
+            v = a[i]
+    return k
+
+def findDisappearedNumbers(nums):
+    xxxx = [i for i in range(len(nums))]
+    ans = []
+    if not nums:
+        return []
+    a = len(nums)
+    for i in nums:
+        if xxxx[i-1]==0:
+            xxxx[i - 1] = -1
+            continue
+        if xxxx[i-1]>0:
+            xxxx[i-1]*=(-1)
+
+    for i in xxxx:
+        if i >=0:
+            ans.append(i+1)
+    return ans
+def isValiad(s):
+    if len(s) == 0 or len(s) == 1:
+        return False
+    temp = []
+    temp.append(s[0])
+    for i in range(1, len(s)):
+        if len(temp)!=0:
+            if temp[-1] == "(" and s[i] == ")":
+                temp.pop()
+                continue
+            if temp[-1] == "[" and s[i] == "]":
+                temp.pop()
+                continue
+            if temp[-1] == "{" and s[i] == "}":
+                temp.pop()
+                continue
+            temp.append(s[i])
+        else:
+            temp.append(s[i])
+    return True if len(temp) == 0 else False
+#并查集
+def findRedundantConnection(edges) :
+    nodesCount = len(edges)
+    parent = list(range(nodesCount + 1))
+
+    def find(index: int) -> int:
+        if parent[index] != index:
+            parent[index] = find(parent[index])
+        return parent[index]
+
+    def union(index1: int, index2: int):
+        parent[find(index1)] = find(index2)
+
+    for node1, node2 in edges:
+        if find(node1) != find(node2):
+            union(node1, node2)
+        else:
+            return [node1, node2]
+
+    return []
+#最大连续和
+def maxsum(nums):
+    s = []
+    s[0] = 0
+    for i in range(1,len(nums)):
+        s.append(s[i-1]+nums[i])
+    return s
+#快速排序
+# def quick_sort(nums):
+
+def partition(arr, low, high):
+    i = (low - 1)  # index of smaller element
+    pivot = arr[high]  # pivot
+    for j in range(low, high):
+        # If current element is smaller than the pivot
+        if arr[j] < pivot:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return (i + 1)
+
+
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low  --> Starting index,
+# high  --> Ending index
+
+# Function to do Quick sort
+def quickSort(arr, low, high):
+    if low < high:
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(arr, low, high)
+
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)
+
+#插入排序
+def insertsort(nums):
+    for i in range(1,len(nums)):
+        key = nums[i]
+        j = i-1
+        while j>=0 and key<nums[j]:
+            nums[j+1] = nums[j]
+            j-=1
+        nums[j+1] = key
+
+def findMedianSortedArrays(nums1, nums2) -> float:
+    len1 = len(nums1)
+    len2 = len(nums2)
+    total = []
+
+    index1 = 0
+    index2 = 0
+    while index1 < len1 and index2 < len2:
+        if nums1[index1] < nums2[index2]:
+            total.append(nums1[index1])
+            index1 += 1
+        else:
+            total.append(nums2[index2])
+            index2 += 1
+    while index1 < len1:
+        total.append(nums1[index1])
+        index1 += 1
+    while index2 < len2:
+        total.append(nums2[index2])
+        index2 += 1
+    l = len(total)
+    if l % 2 == 0:
+        return (total[l // 2] + total[(l // 2) + 1]) / 2
+    else:
+        return total[l // 2]
+#
+def subsets(nums) :
+    if len(nums) == 0:
+        return []
+    ans = [[],[nums[0]]]
+    for i in range(1,len(nums)):
+        for j in ans:
+            ans.append(j + [nums[i]])
+            if len(ans) == pow(2,i+1):
+                break
+    return ans
 if __name__ == "__main__":
-    print(maxProfit( [7,6,4,3,1] ))
+    # a = ["()()()()","(()()())","(()())()","((()()))","()(()())",
+    #      "(())()()","((())())","()(())()","((()))()","(((())))",
+    #      "()((()))","()(())()","(()(()))","()()(())"]
+    # b = ["(((())))","((()()))","((())())","((()))()","(()(()))",
+    #      "(()()())","(()())()","(())(())","(())()()","()((()))",
+    #      "()(()())","()(())()","()()(())","()()()()"]
+    # print(isEqual(a,b))
+    print(subsets([1,2,3,5,6,7]))
